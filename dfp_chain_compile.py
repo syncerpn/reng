@@ -6,7 +6,7 @@ import subprocess
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--meta-path", type=str, required=True, help="onnx meta data file path")
-    parser.add_argument("--mx_nc", type=str, required=True, help="memryx compiler mx_nc binary path")
+    parser.add_argument("--mx_nc", type=str, default="mx_nc", help="memryx compiler mx_nc binary path")
     parser.add_argument("--save-dir", type=str, help="path to save the generated models")
     parser.add_argument("--skip-existed", action="store_true", help="continue previous compilation")
 
@@ -35,13 +35,9 @@ def main():
 
         onnx_file = os.path.join(args.meta_path, "onnx", model_name + ".onnx")
 
-        dxcom_json = {"inputs": {"input": meta_data[model_name]["input"]},}
-        dxcom_json_file = os.path.join(save_dir, model_name + ".json")
-        with open(dxcom_json_file, "w") as json_file:
-            json.dump(dxcom_json, json_file)
-
-        command = f"{args.dxcom} -m {onnx_file} --autocrop \
-            && rm {dxcom_json_file}"
+        command = f"{args.mx_nc} -m {onnx_file} --autocrop \
+            && mv {model_name}* {save_dir} \
+            && rm memryx.neural_compiler.log"
 
         try:
             print(f"[info][{i+1}/{len(meta_data)}] running compilation: {command}")
