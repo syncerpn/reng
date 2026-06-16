@@ -35,7 +35,8 @@ def main():
 
         onnx_file = os.path.join(args.meta_path, "onnx", model_name + ".onnx")
 
-        command = f"{args.mx_nc} -m {onnx_file} --autocrop \
+        command = f"{args.mx_nc} -m {onnx_file} --autocrop -c 4 \
+            && rm {model_name}_crop.onnx \
             && mv {model_name}* {save_dir} \
             && rm memryx.neural_compiler.log"
 

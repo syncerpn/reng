@@ -14,7 +14,7 @@ def get_args():
     parser.add_argument("--output-file", type=str, help="path to output report")
     parser.add_argument("--ibytes", type=int, default=4, help="input byte size")
     parser.add_argument("--obytes", type=int, default=4, help="output byte size")
-    parser.add_argument("--pbytes", type=int, default=4, help="params byte size")
+    parser.add_argument("--pbytes", type=int, default=2, help="params byte size")
     parser.add_argument("--fbytes", type=int, default=4, help="fmaps byte size")
 
     args = parser.parse_args()

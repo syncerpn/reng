@@ -28,7 +28,7 @@ def run_test_command(command, run_output_file, skip_existed):
         try:
             print(f"[info] running command: {command}")
             with open(run_output_file, "w") as f:
-                subprocess.call(command, shell=True, stdout=f, timeout=100)
+                subprocess.call(command, shell=True, stdout=f, timeout=1000)
             command_executed = True
         except subprocess.CalledProcessError as e:
             print(f"[warn] command failed: {e}")
